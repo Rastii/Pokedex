@@ -15,7 +15,8 @@ if [ ! -f dev.db ]; then
 fi
 
 #Setup python virtual environment
-sudo apt-get install python-virtualenv python-dev build-essential
+#sudo apt-get install python-virtualenv python-dev build-essential
+sudo apt-get install python-virtualenv python-dev
 python virtualenv.py flask
 flask/bin/pip install setuptools --no-use-wheel --upgrade
 
@@ -44,11 +45,14 @@ sudo apt-get install uwsgi
 mkdir sock
 #Logs (for uwsgi) will be stored here
 mkdir -p logs/uwsgi
+
+uwsgi --socket 127.0.0.1:31337 -logto "$PWD/logs/uwsgi" -w WSGI:app &
+
 #Apply some sed magic to include the base directory for uwsgi configs
-sed -i.bak "s@sed_magic_1@$PWD@" app_uwsgi.ini
+#sed -i.bak "s@sed_magic_1@$PWD@" app_uwsgi.ini
 
 #And now we initialize our uwsgi configurations to start the app
-uwsgi --ini app_uwsgi.ini
+#uwsgi --ini app_uwsgi.ini
 
 
 ##########################
@@ -60,9 +64,6 @@ sudo apt-get install nginx
 
 #Apply some sed magic to include our static directory
 sed -i.bak "s@sed_magic_1@$PWD/static@" app_nginx.conf
-
-#Apply some sed magic to include our sock directory
-sed -i.bak "s@sed_magic_2@$PWD/sock"
 
 #Remove the default nginx configuration!
 sudo rm /etc/nginx/sites-enabled/default
