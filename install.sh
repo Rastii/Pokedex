@@ -42,15 +42,14 @@ python run.py setup
 ##########################
 #We install uwsgi with pip!
 sudo pip install uwsgi
-#The unix socket will be located here
-mkdir sock
+
 #Logs (for uwsgi) will be stored here
 mkdir -p logs/uwsgi
 
 uwsgi --socket 127.0.0.1:31337 \
       --wsgi-file "$PWD/app/__init__.py" \
       --callable app \
-      --logto "$PWD/logs/uwsgi/error.log"
+      --logto "$PWD/logs/uwsgi/error.log" \
       --python-path "$PWD/app" \
       -H "$PWD/flask" &
 
