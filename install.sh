@@ -50,7 +50,7 @@ mkdir -p logs/uwsgi
 uwsgi --socket 127.0.0.1:31337 \
       --wsgi-file "$PWD/app/__init__.py" \
       --callable app \
-      --logto "$PWD/logs/uwsgi"
+      --logto "$PWD/logs/uwsgi/error.log"
       --python-path "$PWD/app" \
       -H "$PWD/flask" &
 
@@ -65,7 +65,7 @@ sudo apt-get -y install nginx
 mkdir logs/nginx
 
 #Apply some sed magic to include our error logs
-sed -i.bak "s@sed_magic_1@$PWD/logs/nginx@" app_nginx.conf
+sed -i.bak "s@sed_magic_1@$PWD/logs/nginx/error.log@" app_nginx.conf
 
 #Apply some sed magic to include our static directory
 sed -i.bak "s@sed_magic_2@$PWD/static@" app_nginx.conf
