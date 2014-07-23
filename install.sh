@@ -50,7 +50,7 @@ mkdir -p logs/uwsgi
 uwsgi --socket 127.0.0.1:31337 \
       --wsgi-file "$PWD/app/__init__.py" \
       --callable app \
-      --log-to "$PWD/logs/uwsgi"
+      --logto "$PWD/logs/uwsgi"
       --python-path "$PWD/app" \
       -H "$PWD/flask" &
 
