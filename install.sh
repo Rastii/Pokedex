@@ -17,7 +17,7 @@ fi
 #Setup python virtual environment
 #sudo apt-get install python-virtualenv python-dev build-essential
 sudo apt-get -y install python-virtualenv python-dev
-python virtualenv.py flask --setuptools
+virtualenv flask --setuptools
 flask/bin/pip install setuptools --no-use-wheel --upgrade
 
 #Install python dependencies from require.txt
