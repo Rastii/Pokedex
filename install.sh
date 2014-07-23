@@ -40,20 +40,19 @@ python run.py setup
 ##########################
 # Part2: UWSGI setup
 ##########################
-sudo apt-get -y install uwsgi
+#We install uwsgi with pip!
+sudo pip install uwsgi
 #The unix socket will be located here
 mkdir sock
 #Logs (for uwsgi) will be stored here
 mkdir -p logs/uwsgi
 
-uwsgi --socket 127.0.0.1:31337 -logto "$PWD/logs/uwsgi" -w WSGI:app &
-
-#Apply some sed magic to include the base directory for uwsgi configs
-#sed -i.bak "s@sed_magic_1@$PWD@" app_uwsgi.ini
-
-#And now we initialize our uwsgi configurations to start the app
-#uwsgi --ini app_uwsgi.ini
-
+uwsgi --socket 127.0.0.1:31337 \
+      --wsgi-file "$PWD/app/__init__.py" \
+      --callable app \
+      --log-to "$PWD/logs/uwsgi"
+      --python-path "$PWD/app" \
+      -H "$PWD/flask" &
 
 ##########################
 # PART 3: NGINX Setup
@@ -62,8 +61,14 @@ uwsgi --socket 127.0.0.1:31337 -logto "$PWD/logs/uwsgi" -w WSGI:app &
 #Let's install this as a deb package
 sudo apt-get -y install nginx
 
+#Make a log directory
+mkdir logs/nginx
+
+#Apply some sed magic to include our error logs
+sed -i.bak "s@sed_magic_1@$PWD/logs/nginx@" app_nginx.conf
+
 #Apply some sed magic to include our static directory
-sed -i.bak "s@sed_magic_1@$PWD/static@" app_nginx.conf
+sed -i.bak "s@sed_magic_2@$PWD/static@" app_nginx.conf
 
 #Remove the default nginx configuration!
 sudo rm /etc/nginx/sites-enabled/default
