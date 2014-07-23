@@ -1,7 +1,6 @@
 from flask import Flask
 from flask.ext.login import LoginManager
 from flask.ext.bcrypt import Bcrypt
-from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.restful import Api
 import os
 import logging
@@ -16,6 +15,6 @@ login_manager = LoginManager(app)
 
 bcrypt = Bcrypt(app)
 
-db = SQLAlchemy(app)
+from database import db_session as db
 
 from app.views import *
