@@ -16,7 +16,7 @@ fi
 
 #Setup python virtual environment
 #sudo apt-get install python-virtualenv python-dev build-essential
-sudo apt-get install python-virtualenv python-dev
+sudo apt-get -y install python-virtualenv python-dev
 python virtualenv.py flask --setuptools
 flask/bin/pip install setuptools --no-use-wheel --upgrade
 
@@ -40,7 +40,7 @@ python run.py setup
 ##########################
 # Part2: UWSGI setup
 ##########################
-sudo apt-get install uwsgi
+sudo apt-get -y install uwsgi
 #The unix socket will be located here
 mkdir sock
 #Logs (for uwsgi) will be stored here
@@ -60,7 +60,7 @@ uwsgi --socket 127.0.0.1:31337 -logto "$PWD/logs/uwsgi" -w WSGI:app &
 ##########################
 
 #Let's install this as a deb package
-sudo apt-get install nginx
+sudo apt-get -y install nginx
 
 #Apply some sed magic to include our static directory
 sed -i.bak "s@sed_magic_1@$PWD/static@" app_nginx.conf
