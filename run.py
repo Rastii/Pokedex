@@ -1,5 +1,5 @@
 import sys
-from app import app
+from app import *
 from ConfigParser import ConfigParser
 
 def get_configs():

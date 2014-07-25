@@ -16,5 +16,4 @@ login_manager = LoginManager(app)
 bcrypt = Bcrypt(app)
 
 from database import db_session as db
-
 from app.views import *

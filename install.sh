@@ -47,7 +47,7 @@ sudo pip install uwsgi
 mkdir -p logs/uwsgi
 
 uwsgi --socket 127.0.0.1:31337 \
-      --wsgi-file "$PWD/app/__init__.py" \
+      --module "app" \
       --callable app \
       --logto "$PWD/logs/uwsgi/error.log" \
       --python-path "$PWD/app" \
